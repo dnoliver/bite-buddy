@@ -1,10 +1,10 @@
-from haystack import Pipeline
-from haystack.components.generators import OpenAIGenerator
-from haystack.components.builders.prompt_builder import PromptBuilder
-from dotenv import load_dotenv
 from pathlib import Path
 
+from dotenv import load_dotenv
+from haystack import Pipeline
+from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.converters import TextFileToDocument
+from haystack.components.generators import OpenAIGenerator
 
 load_dotenv(dotenv_path=Path(".") / ".env")
 

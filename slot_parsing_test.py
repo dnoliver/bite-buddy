@@ -1,6 +1,7 @@
 import unittest
+
 from slot_parsing import (
-    LocationInKitchenSlotParsion,
+    LocationInKitchenSlotParsing,
     ProductListSlotParsing,
     ProductQuantitySlotParsing,
 )
@@ -8,7 +9,7 @@ from slot_parsing import (
 
 class TestSlotParsing(unittest.TestCase):
     def setUp(self):
-        self.location_in_kitchen_slot_parsing = LocationInKitchenSlotParsion()
+        self.location_in_kitchen_slot_parsing = LocationInKitchenSlotParsing()
         self.product_list_slot_parsing = ProductListSlotParsing()
         self.product_quantity_slot_parsing = ProductQuantitySlotParsing()
 

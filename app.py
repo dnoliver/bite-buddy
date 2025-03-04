@@ -1,21 +1,16 @@
 import os
-
-from haystack import Pipeline
-from haystack.components.fetchers import LinkContentFetcher
-from haystack.components.converters import HTMLToDocument
-from haystack.components.builders import ChatPromptBuilder
-from haystack.components.generators.chat import OpenAIChatGenerator
-from haystack.dataclasses import ChatMessage
-from haystack.components.audio import RemoteWhisperTranscriber
-from dotenv import load_dotenv
 from pathlib import Path
-
-from pathlib import Path
-from openai import OpenAI
 
 import gradio as gr
-
-from haystack import component
+from dotenv import load_dotenv
+from haystack import Pipeline, component
+from haystack.components.audio import RemoteWhisperTranscriber
+from haystack.components.builders import ChatPromptBuilder
+from haystack.components.converters import HTMLToDocument
+from haystack.components.fetchers import LinkContentFetcher
+from haystack.components.generators.chat import OpenAIChatGenerator
+from haystack.dataclasses import ChatMessage
+from openai import OpenAI
 
 load_dotenv(dotenv_path=Path(".") / ".env")
 

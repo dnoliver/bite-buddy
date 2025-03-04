@@ -1,11 +1,11 @@
-from haystack import Pipeline, Document
-from haystack.components.generators import OpenAIGenerator
-from haystack.components.builders.prompt_builder import PromptBuilder
 import unittest
-from dotenv import load_dotenv
 from pathlib import Path
 
+from dotenv import load_dotenv
+from haystack import Document, Pipeline
+from haystack.components.builders.prompt_builder import PromptBuilder
 from haystack.components.converters import TextFileToDocument
+from haystack.components.generators import OpenAIGenerator
 
 load_dotenv(dotenv_path=Path(".") / ".env")
 
@@ -53,7 +53,7 @@ class SlotParsing:
         return result["llm"]["replies"][0]
 
 
-class LocationInKitchenSlotParsion(SlotParsing):
+class LocationInKitchenSlotParsing(SlotParsing):
     slot_path = "slots/location-in-kitchen.yml"
     prompt_path = "prompts/slot-parsing.txt"
 
