@@ -5,40 +5,22 @@ import unittest
 from dotenv import load_dotenv
 from pathlib import Path
 
+from haystack.components.converters import TextFileToDocument
+
 load_dotenv(dotenv_path=Path(".") / ".env")
 
-slot_1 = Document(content="""
-    Name: LocationInKitchenSlot
-    Description: This slot is used to capture the location of an item in the kitchen.
-    Examples:
-    - pantry
-    - cabinets
-    - fridge
-    """)
-
-slot_2 = Document(content="""
-    Name: ProductListSlot
-    Description: This slot is used to capture a list of products.
-    Examples:
-    - yogurt, beans, tomatoes
-    - pasta, tomatoes
-    - cheese, milk
-    """)
-
-slot_3 = Document(content="""
-    Name: ProductQuantitySlot
-    Description: This slot is used to capture the quantity of a product.
-    Examples:
-    - 3 gallons
-    - 1 pound
-    - 2 boxes
-    """)
-
-documents = [slot_1, slot_2, slot_3]
+converter = TextFileToDocument()
+documents = converter.run(
+    sources=[
+        Path("slots/location-in-kitchen.yml"),
+        Path("slots/product-list.yml"),
+        Path("slots/product-quantity.yml"),
+    ]
+)["documents"]
 
 prompt_template = """
-    You are a helful assistant for a software engineer.
-    The documents below describe an Slot for a Voice Assistant application.
+    You are a helpful assistant for a software engineer.
+    The documents below describe a Slot for a Voice Assistant application.
     Your objective is to extract the Slot from the User Utterance, and reply with
     the extracted value. Just reply with the value of the Slot. \n
     Documents:
@@ -50,10 +32,13 @@ prompt_template = """
     Slot Value: 
     """
 
+
 class TestSlotParsing(unittest.TestCase):
     def setUp(self):
         p = Pipeline()
-        p.add_component(instance=PromptBuilder(template=prompt_template), name="prompt_builder")
+        p.add_component(
+            instance=PromptBuilder(template=prompt_template), name="prompt_builder"
+        )
         p.add_component(instance=OpenAIGenerator(), name="llm")
         p.connect("prompt_builder", "llm")
 
@@ -72,8 +57,17 @@ class TestSlotParsing(unittest.TestCase):
         ]
 
         for utterance, expected_slot_value in test_utterances:
-            with self.subTest(utterance=utterance, expected_slot_value=expected_slot_value):
-                result = self.pipeline.run({"prompt_builder": {"documents": [self.documents[0]], "query": utterance}})
+            with self.subTest(
+                utterance=utterance, expected_slot_value=expected_slot_value
+            ):
+                result = self.pipeline.run(
+                    {
+                        "prompt_builder": {
+                            "documents": [self.documents[0]],
+                            "query": utterance,
+                        }
+                    }
+                )
                 self.assertIn(expected_slot_value, result["llm"]["replies"][0])
 
     def test_product_list_slot_parsing(self):
@@ -83,13 +77,25 @@ class TestSlotParsing(unittest.TestCase):
             ("There's cheese sitting in the freezer", "cheese"),
             ("I've got pasta stored in the cabinets", "pasta"),
             ("There's tomatoes and beans in the pantry", "tomatoes, beans"),
-            ("I see yogurt, beans, and tomatoes in the pantry", "yogurt, beans, tomatoes"),
+            (
+                "I see yogurt, beans, and tomatoes in the pantry",
+                "yogurt, beans, tomatoes",
+            ),
             ("There's tomatoes sitting in the fridge", "tomatoes"),
         ]
 
         for utterance, expected_slot_value in test_utterances:
-            with self.subTest(utterance=utterance, expected_slot_value=expected_slot_value):
-                result = self.pipeline.run({"prompt_builder": {"documents": [self.documents[1]], "query": utterance}})
+            with self.subTest(
+                utterance=utterance, expected_slot_value=expected_slot_value
+            ):
+                result = self.pipeline.run(
+                    {
+                        "prompt_builder": {
+                            "documents": [self.documents[1]],
+                            "query": utterance,
+                        }
+                    }
+                )
                 self.assertIn(expected_slot_value, result["llm"]["replies"][0])
 
     def test_product_quantity_slot_parsing(self):
@@ -100,9 +106,19 @@ class TestSlotParsing(unittest.TestCase):
         ]
 
         for utterance, expected_slot_value in test_utterances:
-            with self.subTest(utterance=utterance, expected_slot_value=expected_slot_value):
-                result = self.pipeline.run({"prompt_builder": {"documents": [self.documents[2]], "query": utterance}})
+            with self.subTest(
+                utterance=utterance, expected_slot_value=expected_slot_value
+            ):
+                result = self.pipeline.run(
+                    {
+                        "prompt_builder": {
+                            "documents": [self.documents[2]],
+                            "query": utterance,
+                        }
+                    }
+                )
                 self.assertIn(expected_slot_value, result["llm"]["replies"][0])
+
 
 if __name__ == "__main__":
     unittest.main()

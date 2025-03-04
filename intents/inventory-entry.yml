@@ -1,0 +1,6 @@
+name: InventoryEntryIntent
+description: This intent is used to add an item to the inventory.
+training-phrases:
+- I see yogurt, beans, and tomatoes in the pantry
+- I've got pasta stored in the cabinets
+- There's tomatoes sitting in the fridge

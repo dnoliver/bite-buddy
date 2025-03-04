@@ -19,6 +19,7 @@ from haystack import component
 
 load_dotenv(dotenv_path=Path(".") / ".env")
 
+
 @component
 class RemoteOpenAISpeechToText:
     def __init__(self):

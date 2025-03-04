@@ -1,0 +1,6 @@
+name: ProductListSlot
+description: This slot is used to capture a list of products.
+examples:
+- yogurt, beans, tomatoes
+- pasta, tomatoes
+- cheese, milk

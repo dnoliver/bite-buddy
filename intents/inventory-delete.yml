@@ -1,0 +1,6 @@
+name: InventoryDeleteIntent
+description: This intent is used to remove an item from the inventory.
+training-phrases:
+- Forget what I have in my kitchen
+- Forget what I have in my pantry
+- Remove the beans from my inventory

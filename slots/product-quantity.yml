@@ -1,0 +1,6 @@
+name: ProductQuantitySlot
+description: This slot is used to capture the quantity of a product.
+examples:
+- 3 gallons
+- 1 pound
+- 2 boxes

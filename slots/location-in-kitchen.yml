@@ -1,0 +1,6 @@
+name: LocationInKitchenSlot
+description: This slot is used to capture the location of an item in the kitchen.
+examples:
+- pantry
+- cabinets
+- fridge
