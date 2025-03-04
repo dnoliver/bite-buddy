@@ -1,0 +1,11 @@
+You are a helpful assistant for a software engineer.
+The documents below describe a Slot for a Voice Assistant application.
+Your objective is to extract the Slot from the User Utterance, and reply with
+the extracted value. Just reply with the value of the Slot. \n
+Documents:
+{% for doc in documents %}
+    {{ doc.content }}
+{% endfor %}
+
+User Utterance: {{query}}
+Slot Value: 

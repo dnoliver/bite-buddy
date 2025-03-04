@@ -1,49 +1,16 @@
-from haystack import Pipeline, Document
-from haystack.components.generators import OpenAIGenerator
-from haystack.components.builders.prompt_builder import PromptBuilder
 import unittest
-from dotenv import load_dotenv
-from pathlib import Path
-
-from haystack.components.converters import TextFileToDocument
-
-load_dotenv(dotenv_path=Path(".") / ".env")
-
-converter = TextFileToDocument()
-documents = converter.run(
-    sources=[
-        Path("slots/location-in-kitchen.yml"),
-        Path("slots/product-list.yml"),
-        Path("slots/product-quantity.yml"),
-    ]
-)["documents"]
-
-prompt_template = """
-    You are a helpful assistant for a software engineer.
-    The documents below describe a Slot for a Voice Assistant application.
-    Your objective is to extract the Slot from the User Utterance, and reply with
-    the extracted value. Just reply with the value of the Slot. \n
-    Documents:
-    {% for doc in documents %}
-        {{ doc.content }}
-    {% endfor %}
-
-    User Utterance: {{query}}
-    Slot Value: 
-    """
+from slot_parsing import (
+    LocationInKitchenSlotParsion,
+    ProductListSlotParsing,
+    ProductQuantitySlotParsing,
+)
 
 
 class TestSlotParsing(unittest.TestCase):
     def setUp(self):
-        p = Pipeline()
-        p.add_component(
-            instance=PromptBuilder(template=prompt_template), name="prompt_builder"
-        )
-        p.add_component(instance=OpenAIGenerator(), name="llm")
-        p.connect("prompt_builder", "llm")
-
-        self.pipeline = p
-        self.documents = documents
+        self.location_in_kitchen_slot_parsing = LocationInKitchenSlotParsion()
+        self.product_list_slot_parsing = ProductListSlotParsing()
+        self.product_quantity_slot_parsing = ProductQuantitySlotParsing()
 
     def test_location_in_kitchen_slot_parsing(self):
         test_utterances = [
@@ -60,15 +27,8 @@ class TestSlotParsing(unittest.TestCase):
             with self.subTest(
                 utterance=utterance, expected_slot_value=expected_slot_value
             ):
-                result = self.pipeline.run(
-                    {
-                        "prompt_builder": {
-                            "documents": [self.documents[0]],
-                            "query": utterance,
-                        }
-                    }
-                )
-                self.assertIn(expected_slot_value, result["llm"]["replies"][0])
+                result = self.location_in_kitchen_slot_parsing.run(utterance)
+                self.assertIn(expected_slot_value, result)
 
     def test_product_list_slot_parsing(self):
         test_utterances = [
@@ -88,15 +48,8 @@ class TestSlotParsing(unittest.TestCase):
             with self.subTest(
                 utterance=utterance, expected_slot_value=expected_slot_value
             ):
-                result = self.pipeline.run(
-                    {
-                        "prompt_builder": {
-                            "documents": [self.documents[1]],
-                            "query": utterance,
-                        }
-                    }
-                )
-                self.assertIn(expected_slot_value, result["llm"]["replies"][0])
+                result = self.product_list_slot_parsing.run(utterance)
+                self.assertIn(expected_slot_value, result)
 
     def test_product_quantity_slot_parsing(self):
         test_utterances = [
@@ -109,15 +62,8 @@ class TestSlotParsing(unittest.TestCase):
             with self.subTest(
                 utterance=utterance, expected_slot_value=expected_slot_value
             ):
-                result = self.pipeline.run(
-                    {
-                        "prompt_builder": {
-                            "documents": [self.documents[2]],
-                            "query": utterance,
-                        }
-                    }
-                )
-                self.assertIn(expected_slot_value, result["llm"]["replies"][0])
+                result = self.product_quantity_slot_parsing.run(utterance)
+                self.assertIn(expected_slot_value, result)
 
 
 if __name__ == "__main__":

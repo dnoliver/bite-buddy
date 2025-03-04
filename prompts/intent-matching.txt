@@ -1,0 +1,11 @@
+You are a helpful assistant for a software engineer.
+The documents below describe Intents for a Voice Assistant application.
+Your objective is to classify the User Utterance, and reply with 
+the intent it is targeting. Just reply with the Name of the intent. \n
+Documents:
+{% for doc in documents %}
+    {{ doc.content }}
+{% endfor %}
+
+User Utterance: {{query}}
+Target Intent:
