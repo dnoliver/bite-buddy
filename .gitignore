@@ -1,3 +1,4 @@
 .venv
-env.ps1
+.env
 .tmp
+__pycache__

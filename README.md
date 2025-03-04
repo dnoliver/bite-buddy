@@ -9,5 +9,6 @@ gradio app.py
 ![Banner](banner.jpg)
 
 ```
-isort *.py; black *.py; mdformat *.md
+pip install isort black mdformat
+isort *.py; black *.py; mdformat README.md
 ```
