@@ -3,12 +3,9 @@
 ```ps1
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+doit
 gradio app.py
 ```
 
 ![Banner](banner.jpg)
-
-```
-pip install isort black mdformat
-isort *.py; black *.py; mdformat README.md
-```
