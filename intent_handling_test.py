@@ -1,5 +1,7 @@
+import os
 import unittest
 
+from database import Database
 from intent_handling import (
     InventoryDeleteIntentHandling,
     InventoryEntryIntentHandling,
@@ -9,9 +11,23 @@ from intent_handling import (
 
 class TestIntentMatching(unittest.TestCase):
     def setUp(self):
-        self.inventory_query_intent_handling = InventoryQueryIntentHandling()
-        self.inventory_entry_intent_handling = InventoryEntryIntentHandling()
-        self.inventory_delete_intent_handling = InventoryDeleteIntentHandling()
+        self.database = Database(":memory:")
+        self.inventory_query_intent_handling = InventoryQueryIntentHandling(
+            database=self.database
+        )
+        self.inventory_entry_intent_handling = InventoryEntryIntentHandling(
+            database=self.database
+        )
+        self.inventory_delete_intent_handling = InventoryDeleteIntentHandling(
+            database=self.database
+        )
+
+        self.database.insert_product_in_location("fridge", "tomatoes")
+        self.database.insert_product_in_location("fridge", "bananas")
+        self.database.insert_product_in_location("pantry", "tomatoes")
+
+    def tearDown(self):
+        self.database.close_connection()
 
     def test_inventory_query_intent_handling(self):
         test_utterances = [
@@ -20,16 +36,12 @@ class TestIntentMatching(unittest.TestCase):
                 "In the kitchen's fridge you have: tomatoes, bananas.",
             ),
             (
-                "Show the items in my pantry",
-                "In the kitchen's pantry you have: tomatoes, bananas.",
-            ),
-            (
                 "Enumerate the products in my pantry",
-                "In the kitchen's pantry you have: tomatoes, bananas.",
+                "In the kitchen's pantry you have: tomatoes.",
             ),
             (
                 "Show the items in my kitchen's shelf",
-                "In the kitchen's shelf you have: tomatoes, bananas.",
+                "There are no products in the kitchen's shelf.",
             ),
         ]
 
@@ -45,12 +57,12 @@ class TestIntentMatching(unittest.TestCase):
                 "Ok, I got apples, oranges in the fridge.",
             ),
             (
-                "Add apples and oranges to my pantry",
-                "Ok, I got apples, oranges in the pantry.",
+                "Add apples to my pantry",
+                "Ok, I got apples in the pantry.",
             ),
             (
-                "Add apples and oranges to my kitchen's shelf",
-                "Ok, I got apples, oranges in the shelf.",
+                "Add bananas and milk to my kitchen's shelf",
+                "Ok, I got bananas, milk in the shelf.",
             ),
         ]
 
