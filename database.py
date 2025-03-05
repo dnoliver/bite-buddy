@@ -31,7 +31,7 @@ class Database:
     def _create_connection(self, db_file):
         conn = None
         try:
-            conn = sqlite3.connect(db_file)
+            conn = sqlite3.connect(db_file, check_same_thread=False)
             logger.info(f"Connected to SQLite database: {db_file}")
         except Error as e:
             logger.error(f"Error connecting to database: {e}")

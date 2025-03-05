@@ -3,16 +3,26 @@ from pathlib import Path
 
 import gradio as gr
 from dotenv import load_dotenv
-from haystack import Pipeline, component
+from haystack import component
 from haystack.components.audio import RemoteWhisperTranscriber
-from haystack.components.builders import ChatPromptBuilder
-from haystack.components.converters import HTMLToDocument
-from haystack.components.fetchers import LinkContentFetcher
-from haystack.components.generators.chat import OpenAIChatGenerator
-from haystack.dataclasses import ChatMessage
 from openai import OpenAI
 
+from database import Database
+from intent_handling import (
+    InventoryDeleteIntentHandling,
+    InventoryEntryIntentHandling,
+    InventoryQueryIntentHandling,
+)
+from intent_matching import IntentMatching
+
 load_dotenv(dotenv_path=Path(".") / ".env")
+
+intent_matching = IntentMatching()
+intent_handlers = {
+    "InventoryQueryIntent": InventoryQueryIntentHandling,
+    "InventoryEntryIntent": InventoryEntryIntentHandling,
+    "InventoryDeleteIntent": InventoryDeleteIntentHandling,
+}
 
 
 @component
@@ -28,66 +38,49 @@ class RemoteOpenAISpeechToText:
             input=text,
         )
 
+        os.makedirs(".tmp", exist_ok=True)
         response.write_to_file(".tmp/output.mp3")
 
         return {"file_path": ".tmp/output.mp3"}
 
 
-fetcher = LinkContentFetcher()
-converter = HTMLToDocument()
-prompt_template = [
-    ChatMessage.from_user(
-        """
-      According to the contents of this website:
-      {% for document in documents %}
-        {{document.content}}
-      {% endfor %}
-      Answer the given question: {{query}}
-      Answer:
-      """
-    )
-]
-
-prompt_builder = ChatPromptBuilder(template=prompt_template)
-llm = OpenAIChatGenerator()
 transcriber = RemoteWhisperTranscriber()
 talker = RemoteOpenAISpeechToText()
 
-pipeline = Pipeline()
-pipeline.add_component("fetcher", fetcher)
-pipeline.add_component("converter", converter)
-pipeline.add_component("prompt", prompt_builder)
-pipeline.add_component("llm", llm)
-
-pipeline.connect("fetcher.streams", "converter.sources")
-pipeline.connect("converter.documents", "prompt.documents")
-pipeline.connect("prompt.prompt", "llm")
-
 with gr.Blocks() as demo:
-    gr.Markdown("# Local Voice Assistant")
+    gr.Markdown("# Bite Buddy")
     gr.Markdown(
         """
-        This is a voice assistant that can answer questions based on the contents of a website. 
+        This is a voice assistant for the products in your kitchen. 
         You can ask a question by speaking into the microphone. 
         You can type the question in the text box as well.
         Then click "Run" to get the answer.
         """
     )
     audio = gr.Audio(label="Audio", sources=["microphone"], type="filepath")
-    url = gr.Textbox(
-        label="URL", placeholder="https://haystack.deepset.ai/overview/quick-start"
+    query = gr.Dropdown(
+        label="Question",
+        choices=[
+            "What is in the pantry?",
+            "Put the milk in the pantry",
+            "Clear the pantry",
+        ],
+        interactive=True,
+        allow_custom_value=True,
     )
-    query = gr.Textbox(label="Question")
     run = gr.Button(value="Run")
     result = gr.Textbox(label="Answer")
     speak = gr.Button(value="Speak")
     speech = gr.Audio(label="Speech", interactive=False)
 
-    def run_query(url, query):
-        response = pipeline.run(
-            {"fetcher": {"urls": [url]}, "prompt": {"query": query}}
-        )
-        return response["llm"]["replies"][0].text
+    def run_query(query):
+        if query is None:
+            return ""
+
+        result = intent_matching.run(query)
+        intent_handler = intent_handlers[result]
+        _handler_instance = intent_handler(Database("inventory.db"))
+        return _handler_instance.run(query)
 
     def transcribe_audio(audio_file):
         if audio_file is None:
@@ -103,10 +96,11 @@ with gr.Blocks() as demo:
         result = talker.run(answer)
         return result["file_path"]
 
+    # pylint: disable=no-member
     audio.input(transcribe_audio, inputs=[audio], outputs=[query])
-    query.submit(run_query, inputs=[url, query], outputs=[result])
-    run.click(run_query, inputs=[url, query], outputs=[result])
+    run.click(run_query, inputs=[query], outputs=[result])
     speak.click(speak_answer, inputs=[result], outputs=[speech])
+    # pylint: enable=no-member
 
 if __name__ == "__main__":
     demo.launch(allowed_paths=[".tmp"])
