@@ -43,6 +43,7 @@ class TestSlotParsing(unittest.TestCase):
                 "yogurt, beans, tomatoes",
             ),
             ("There's tomatoes sitting in the fridge", "tomatoes"),
+            ("In my pantry I have tomatoes and bananas", "tomatoes, bananas")
         ]
 
         for utterance, expected_slot_value in test_utterances:

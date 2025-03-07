@@ -9,7 +9,7 @@ from intent_handling import (
 )
 
 
-class TestIntentMatching(unittest.TestCase):
+class TestIntentHandling(unittest.TestCase):
     def setUp(self):
         self.database = Database(":memory:")
         self.inventory_query_intent_handling = InventoryQueryIntentHandling(
