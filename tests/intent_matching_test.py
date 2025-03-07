@@ -1,6 +1,6 @@
 import unittest
 
-from intent_matching import IntentMatching
+from src.intent_matching import IntentMatching
 
 
 class TestIntentMatching(unittest.TestCase):

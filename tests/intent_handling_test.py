@@ -1,8 +1,8 @@
 import os
 import unittest
 
-from database import Database
-from intent_handling import (
+from src.database import Database
+from src.intent_handling import (
     InventoryDeleteIntentHandling,
     InventoryEntryIntentHandling,
     InventoryQueryIntentHandling,
@@ -10,24 +10,13 @@ from intent_handling import (
 )
 
 
-class TestIntentHandling(unittest.TestCase):
+class TestInventoryQueryIntentHandling(unittest.TestCase):
     def setUp(self):
         # Create a new database in memory
         self.database = Database(":memory:")
 
-        # Initialize intent handling classes
-        self.inventory_query_intent_handling = InventoryQueryIntentHandling(
-            database=self.database
-        )
-        self.inventory_entry_intent_handling = InventoryEntryIntentHandling(
-            database=self.database
-        )
-        self.inventory_delete_intent_handling = InventoryDeleteIntentHandling(
-            database=self.database
-        )
-        self.product_query_intent_handling = ProductQueryIntentHandling(
-            database=self.database
-        )
+        # Initialize intent handling class
+        self.intent_handling = InventoryQueryIntentHandling(database=self.database)
 
         # Add Mock Data
         self.database.insert_product_in_location("fridge", "tomatoes")
@@ -37,7 +26,7 @@ class TestIntentHandling(unittest.TestCase):
     def tearDown(self):
         self.database.close_connection()
 
-    def test_inventory_query_intent_handling(self):
+    def test_intent_handling(self):
         test_utterances = [
             (
                 "List everything I have in my fridge",
@@ -55,8 +44,25 @@ class TestIntentHandling(unittest.TestCase):
 
         for utterance, expected_intent in test_utterances:
             with self.subTest(utterance=utterance, expected_intent=expected_intent):
-                result = self.inventory_query_intent_handling.run(utterance)
+                result = self.intent_handling.run(utterance)
                 self.assertIn(expected_intent, result)
+
+
+class TestInventoryEntryIntentHandling(unittest.TestCase):
+    def setUp(self):
+        # Create a new database in memory
+        self.database = Database(":memory:")
+
+        # Initialize intent handling class
+        self.intent_handling = InventoryEntryIntentHandling(database=self.database)
+
+        # Add Mock Data
+        self.database.insert_product_in_location("fridge", "tomatoes")
+        self.database.insert_product_in_location("fridge", "bananas")
+        self.database.insert_product_in_location("pantry", "tomatoes")
+
+    def tearDown(self):
+        self.database.close_connection()
 
     def test_inventory_entry_intent_handling(self):
         test_utterances = [
@@ -76,8 +82,25 @@ class TestIntentHandling(unittest.TestCase):
 
         for utterance, expected_intent in test_utterances:
             with self.subTest(utterance=utterance, expected_intent=expected_intent):
-                result = self.inventory_entry_intent_handling.run(utterance)
+                result = self.intent_handling.run(utterance)
                 self.assertIn(expected_intent, result)
+
+
+class TestInventoryDeleteIntentHandling(unittest.TestCase):
+    def setUp(self):
+        # Create a new database in memory
+        self.database = Database(":memory:")
+
+        # Initialize intent handling class
+        self.intent_handling = InventoryDeleteIntentHandling(database=self.database)
+
+        # Add Mock Data
+        self.database.insert_product_in_location("fridge", "tomatoes")
+        self.database.insert_product_in_location("fridge", "bananas")
+        self.database.insert_product_in_location("pantry", "tomatoes")
+
+    def tearDown(self):
+        self.database.close_connection()
 
     def test_inventory_delete_intent_handling(self):
         test_utterances = [
@@ -97,8 +120,25 @@ class TestIntentHandling(unittest.TestCase):
 
         for utterance, expected_intent in test_utterances:
             with self.subTest(utterance=utterance, expected_intent=expected_intent):
-                result = self.inventory_delete_intent_handling.run(utterance)
+                result = self.intent_handling.run(utterance)
                 self.assertIn(expected_intent, result)
+
+
+class TestProductQueryIntentHandling(unittest.TestCase):
+    def setUp(self):
+        # Create a new database in memory
+        self.database = Database(":memory:")
+
+        # Initialize intent handling class
+        self.intent_handling = ProductQueryIntentHandling(database=self.database)
+
+        # Add Mock Data
+        self.database.insert_product_in_location("fridge", "tomatoes")
+        self.database.insert_product_in_location("fridge", "bananas")
+        self.database.insert_product_in_location("pantry", "tomatoes")
+
+    def tearDown(self):
+        self.database.close_connection()
 
     def test_product_query_intent_handling(self):
         test_utterances = [
@@ -118,7 +158,7 @@ class TestIntentHandling(unittest.TestCase):
 
         for utterance, expected_intent in test_utterances:
             with self.subTest(utterance=utterance, expected_intent=expected_intent):
-                result = self.product_query_intent_handling.run(utterance)
+                result = self.intent_handling.run(utterance)
                 self.assertIn(expected_intent, result)
 
 

@@ -1,13 +1,13 @@
 import glob
 
-python_files = glob.glob("*.py")
+python_files = glob.glob("src/*.py") + glob.glob("tests/*.py") + glob.glob("*.py")
 markdown_files = glob.glob("*.md")
 
 
 def task_isort():
     """Run isort on all Python files."""
     return {
-        "actions": ["isort --profile black ."],
+        "actions": ["isort --profile black " + " ".join(python_files)],
         "file_dep": python_files,
         "verbosity": 2,
     }
@@ -16,7 +16,7 @@ def task_isort():
 def task_black():
     """Run black on all Python files."""
     return {
-        "actions": ["black ."],
+        "actions": ["black " + " ".join(python_files)],
         "file_dep": python_files,
         "verbosity": 2,
     }
@@ -25,7 +25,7 @@ def task_black():
 def task_mdformat():
     """Run mdformat on all Markdown files."""
     return {
-        "actions": ["mdformat README.md TESTING.md --wrap 80"],
+        "actions": ["mdformat --wrap 80 " + " ".join(markdown_files)],
         "file_dep": markdown_files,
         "verbosity": 2,
     }
@@ -34,7 +34,7 @@ def task_mdformat():
 def task_pylint():
     """Run pylint on all Python files."""
     return {
-        "actions": ["pylint -E *.py"],
+        "actions": ["pylint -E " + " ".join(python_files)],
         "file_dep": python_files,
         "verbosity": 2,
     }

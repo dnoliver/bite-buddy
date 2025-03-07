@@ -1,5 +1,5 @@
-from database import Database
-from slot_parsing import (
+from src.database import Database
+from src.slot_parsing import (
     LocationInKitchenSlotParsing,
     ProductListSlotParsing,
     ProductQuantitySlotParsing,

@@ -1,6 +1,6 @@
 import unittest
 
-from slot_parsing import (
+from src.slot_parsing import (
     LocationInKitchenSlotParsing,
     ProductListSlotParsing,
     ProductQuantitySlotParsing,

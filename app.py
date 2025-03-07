@@ -7,14 +7,14 @@ from haystack import component
 from haystack.components.audio import RemoteWhisperTranscriber
 from openai import OpenAI
 
-from database import Database
-from intent_handling import (
+from src.database import Database
+from src.intent_handling import (
     InventoryDeleteIntentHandling,
     InventoryEntryIntentHandling,
     InventoryQueryIntentHandling,
     ProductQueryIntentHandling,
 )
-from intent_matching import IntentMatching
+from src.intent_matching import IntentMatching
 
 load_dotenv(dotenv_path=Path(".") / ".env")
 
