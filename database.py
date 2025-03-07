@@ -78,6 +78,20 @@ class Database:
         WHERE location = ?;
         """
         self.execute_query(delete_query, (location,))
+    
+    def find_product(self, product):
+        select_query = """
+        SELECT location FROM inventory
+        WHERE product = ?;
+        """
+        try:
+            cursor = self.connection.cursor()
+            cursor.execute(select_query, (product,))
+            locations = cursor.fetchall()
+            return [location[0] for location in locations]
+        except Error as e:
+            logger.error(f"Error fetching locations: {e}")
+            return []
 
     def execute_query(self, query, params=None):
         try:

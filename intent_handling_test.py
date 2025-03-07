@@ -6,12 +6,16 @@ from intent_handling import (
     InventoryDeleteIntentHandling,
     InventoryEntryIntentHandling,
     InventoryQueryIntentHandling,
+    ProductQueryIntentHandling,
 )
 
 
 class TestIntentHandling(unittest.TestCase):
     def setUp(self):
+        # Create a new database in memory
         self.database = Database(":memory:")
+
+        # Initialize intent handling classes
         self.inventory_query_intent_handling = InventoryQueryIntentHandling(
             database=self.database
         )
@@ -21,7 +25,11 @@ class TestIntentHandling(unittest.TestCase):
         self.inventory_delete_intent_handling = InventoryDeleteIntentHandling(
             database=self.database
         )
+        self.product_query_intent_handling = ProductQueryIntentHandling(
+            database=self.database
+        )
 
+        # Add Mock Data
         self.database.insert_product_in_location("fridge", "tomatoes")
         self.database.insert_product_in_location("fridge", "bananas")
         self.database.insert_product_in_location("pantry", "tomatoes")
@@ -92,6 +100,26 @@ class TestIntentHandling(unittest.TestCase):
                 result = self.inventory_delete_intent_handling.run(utterance)
                 self.assertIn(expected_intent, result)
 
+    def test_product_query_intent_handling(self):
+        test_utterances = [
+            (
+                "Where is the milk",
+                "You don't have milk.",
+            ),
+            (
+                "Find the bananas",
+                "You have bananas in the fridge.",
+            ),
+            (
+                "Help me find the tomatoes",
+                "You have tomatoes in multiple locations: fridge, pantry.",
+            )
+        ]
+
+        for utterance, expected_intent in test_utterances:
+            with self.subTest(utterance=utterance, expected_intent=expected_intent):
+                result = self.product_query_intent_handling.run(utterance)
+                self.assertIn(expected_intent, result)
 
 if __name__ == "__main__":
     unittest.main()
