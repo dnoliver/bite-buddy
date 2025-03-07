@@ -25,7 +25,7 @@ def task_black():
 def task_mdformat():
     """Run mdformat on all Markdown files."""
     return {
-        "actions": ["mdformat README.md --wrap 120"],
+        "actions": ["mdformat README.md TESTING.md --wrap 80"],
         "file_dep": markdown_files,
         "verbosity": 2,
     }
