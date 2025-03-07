@@ -113,13 +113,14 @@ class TestIntentHandling(unittest.TestCase):
             (
                 "Help me find the tomatoes",
                 "You have tomatoes in multiple locations: fridge, pantry.",
-            )
+            ),
         ]
 
         for utterance, expected_intent in test_utterances:
             with self.subTest(utterance=utterance, expected_intent=expected_intent):
                 result = self.product_query_intent_handling.run(utterance)
                 self.assertIn(expected_intent, result)
+
 
 if __name__ == "__main__":
     unittest.main()

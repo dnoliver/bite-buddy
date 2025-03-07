@@ -52,8 +52,9 @@ class InventoryDeleteIntentHandling:
 
         return f"Ok, I cleared the kitchen's {location_in_kitchen}."
 
+
 class ProductQueryIntentHandling:
-    
+
     def __init__(self, database: Database):
         self.product_list_parser = ProductListSlotParsing()
         self.database = database

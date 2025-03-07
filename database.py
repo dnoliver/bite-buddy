@@ -78,7 +78,7 @@ class Database:
         WHERE location = ?;
         """
         self.execute_query(delete_query, (location,))
-    
+
     def find_product(self, product):
         select_query = """
         SELECT location FROM inventory
