@@ -12,6 +12,7 @@ from intent_handling import (
     InventoryDeleteIntentHandling,
     InventoryEntryIntentHandling,
     InventoryQueryIntentHandling,
+    ProductQueryIntentHandling,
 )
 from intent_matching import IntentMatching
 
@@ -22,6 +23,7 @@ intent_handlers = {
     "InventoryQueryIntent": InventoryQueryIntentHandling,
     "InventoryEntryIntent": InventoryEntryIntentHandling,
     "InventoryDeleteIntent": InventoryDeleteIntentHandling,
+    "ProductQueryIntent": ProductQueryIntentHandling,
 }
 
 
@@ -63,6 +65,7 @@ with gr.Blocks() as demo:
         choices=[
             "What is in the pantry?",
             "Put the milk in the pantry",
+            "Where is the milk?",
             "Clear the pantry",
         ],
         interactive=True,
