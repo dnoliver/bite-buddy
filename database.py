@@ -28,6 +28,20 @@ class Database:
         """
         self.execute_query(create_table_query)
 
+        create_trigger_query = """
+        CREATE TRIGGER IF NOT EXISTS remove_duplicates
+        AFTER INSERT ON inventory
+        BEGIN
+            DELETE FROM inventory
+            WHERE id NOT IN (
+                SELECT MIN(id)
+                FROM inventory
+                GROUP BY location, product
+            );
+        END;
+        """
+        self.execute_query(create_trigger_query)
+
     def _create_connection(self, db_file):
         conn = None
         try:
