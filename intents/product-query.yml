@@ -1,0 +1,6 @@
+name: ProductQueryIntent
+description: This intent is used to find a product in the inventory.
+training-phrases:
+  - Where is the tomatoe sauce?
+  - Find the milk
+  - Locate the bread

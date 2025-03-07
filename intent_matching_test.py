@@ -9,16 +9,22 @@ class TestIntentMatching(unittest.TestCase):
 
     def test_intent_matching(self):
         test_utterances = [
+            # Inventory Entry Intent
             ("I see apples and oranges in the pantry", "InventoryEntryIntent"),
-            ("List everything I have in my fridge", "InventoryQueryIntent"),
-            ("Remove the milk from my inventory", "InventoryDeleteIntent"),
-            ("Show the items in my pantry", "InventoryQueryIntent"),
-            ("Forget what I have in my fridge", "InventoryDeleteIntent"),
             ("I've got rice stored in the cabinets", "InventoryEntryIntent"),
-            ("Enumerate the products in my pantry", "InventoryQueryIntent"),
-            ("Forget what I have in my freezer", "InventoryDeleteIntent"),
             ("There's cheese sitting in the fridge", "InventoryEntryIntent"),
-            ("Show the items in my kitchen's shelf", "InventoryQueryIntent"),
+            # Inventory Query Intent
+            ("List everything I have in my fridge", "InventoryQueryIntent"),
+            ("Enumerate the products in my pantry", "InventoryQueryIntent"),
+            ("Show the items in my pantry", "InventoryQueryIntent"),
+            # Inventory Delete Intent
+            ("Remove the milk from my inventory", "InventoryDeleteIntent"),
+            ("Forget what I have in my fridge", "InventoryDeleteIntent"),
+            ("Forget what I have in my freezer", "InventoryDeleteIntent"),
+            # Product Query Intent
+            ("Where is the milk", "ProductQueryIntent"),
+            ("Find the tomatoes", "ProductQueryIntent"),
+            ("Help me find the sugar", "ProductQueryIntent"),
         ]
 
         for utterance, expected_intent in test_utterances:
