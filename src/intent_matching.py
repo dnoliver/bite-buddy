@@ -19,6 +19,7 @@ class IntentMatching:
                 Path("intents/inventory-entry.yml"),
                 Path("intents/inventory-query.yml"),
                 Path("intents/product-query.yml"),
+                Path("intents/recipe-query.yml"),
             ]
         )["documents"]
 
