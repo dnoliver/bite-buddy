@@ -1,3 +1,7 @@
+from haystack import Document, Pipeline
+from haystack.components.builders.prompt_builder import PromptBuilder
+from haystack.components.generators import OpenAIGenerator
+
 from src.database import Database
 from src.slot_parsing import (
     LocationInKitchenSlotParsing,
@@ -69,3 +73,32 @@ class ProductQueryIntentHandling:
             return f"You have {product_list[0]} in the {locations[0]}."
         if len(locations) > 1:
             return f"You have {product_list[0]} in multiple locations: {', '.join(locations)}."
+
+
+class RecipeQueryIntentHandling:
+
+    def __init__(self, database: Database):
+        self.database = database
+
+        self.pipeline = Pipeline()
+
+        with open("prompts/recipe-query.txt") as f:
+            self.prompt_template = f.read()
+
+        self.pipeline.add_component(
+            instance=PromptBuilder(template=self.prompt_template), name="prompt_builder"
+        )
+        self.pipeline.add_component(instance=OpenAIGenerator(), name="llm")
+        self.pipeline.connect("prompt_builder", "llm")
+
+    def run(self, utterance: str):
+        product_list = self.database.list_products()
+
+        if len(product_list) == 0:
+            return "You don't have any products in the kitchen."
+
+        documents = []
+        for product in product_list:
+            documents.append(Document(content=product))
+        result = self.pipeline.run({"prompt_builder": {"documents": documents}})
+        return "Here is a recipe for you:\n\n" + result["llm"]["replies"][0]

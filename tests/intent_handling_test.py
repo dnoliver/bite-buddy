@@ -7,6 +7,7 @@ from src.intent_handling import (
     InventoryEntryIntentHandling,
     InventoryQueryIntentHandling,
     ProductQueryIntentHandling,
+    RecipeQueryIntentHandling,
 )
 
 
@@ -160,6 +161,29 @@ class TestProductQueryIntentHandling(unittest.TestCase):
             with self.subTest(utterance=utterance, expected_intent=expected_intent):
                 result = self.intent_handling.run(utterance)
                 self.assertIn(expected_intent, result)
+
+
+class TestRecipeQueryIntentHandling(unittest.TestCase):
+    def setUp(self):
+        # Create a new database in memory
+        self.database = Database(":memory:")
+
+        # Initialize intent handling class
+        self.intent_handling = RecipeQueryIntentHandling(database=self.database)
+
+        # Add Mock Data
+        self.database.insert_product_in_location("fridge", "tomatoes")
+        self.database.insert_product_in_location("fridge", "bananas")
+        self.database.insert_product_in_location("pantry", "tomatoes")
+
+    def tearDown(self):
+        self.database.close_connection()
+
+    def test_product_query_intent_handling(self):
+        utterance = "Give me a recipe"
+        result = self.intent_handling.run(utterance)
+
+        self.assertIn("Here is a recipe for you:", result)
 
 
 if __name__ == "__main__":
