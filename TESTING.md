@@ -11,13 +11,13 @@ The purpose is to do a Task test: can users complete a certain task?
 The objective of this activity is to verify if the user can use the application
 to achieve a given task. We want to know if the application will help maintain
 your kitchen inventory in a way that is more convenient than plain note taking
-(e.g with pencil and paper, or in another app).
+(e.g., with pencil and paper, or in another app).
 
 ## User profile -> who is the user?
 
 - General computer experience: The user is a digital native, has a fair
   understanding of computing technology, uses a cellphone every day for common
-  tasks, and usually has access to a computer for more dedicated tasks (e.g 1
+  tasks, and usually has access to a computer for more dedicated tasks (e.g., 1
   hour every other day)
 - Age: 25 to 45 years old
 - Education: High School, have attended some College
@@ -28,32 +28,41 @@ your kitchen inventory in a way that is more convenient than plain note taking
 
 The user will be instructed to complete the following tasks:
 
-- Use Bite Buddy to dictate the products currently in your fridge.
-- Command Bite Buddy to speak out the products currently in your fridge.
-- Command Bite Buddy to forget the products in your fridge.
+- Tell Bite Buddy what you currently have in the fridge.
+- Ask Bite Buddy to list the products in the fridge.
+- Ask Bite Buddy where the ketchup is.
+- Tell Bite Buddy to forget the products in your fridge.
+- Ask Bite Buddy to recommend a recipe with the products in your fridge.
 
 If the user can't execute the task, the tester shall provide additional
 information about how to do it. This shall be done after 3 attempts, to prevent
-interfiering with the testing process and to prevent frustruation from the user.
+interfering with the testing process and to prevent frustration from the user.
 
-After completing the tasks, the user wil be instructed to complete the following
-survey, using the Likert Scale to rate engagement level:
+After completing the tasks, the user will be instructed to complete the
+following survey, using the Likert Scale to rate engagement level:
 
-| Statement                                      | Strongly Disagree | Disagree | Somewhat Disagree | Neutral | Somewhat Agree | Agree | Strongly Agree |
-| ---------------------------------------------- | ----------------- | -------- | ----------------- | ------- | -------------- | ----- | -------------- |
-| The application is easy to use                 |                   |          |                   |         |                |       |                |
-| I like the flow of the application             |                   |          |                   |         |                |       |                |
-| The application understands what I say         |                   |          |                   |         |                |       |                |
-| I would recommend this application to a friend |                   |          |                   |         |                |       |                |
+| Statement                                           | Strongly Disagree | Disagree | Somewhat Disagree | Neutral | Somewhat Agree | Agree | Strongly Agree |
+| --------------------------------------------------- | ----------------- | -------- | ----------------- | ------- | -------------- | ----- | -------------- |
+| The app is easy to use                              |                   |          |                   |         |                |       |                |
+| I like the flow of the application                  |                   |          |                   |         |                |       |                |
+| The app understands what I say                      |                   |          |                   |         |                |       |                |
+| I would recommend this application to a friend      |                   |          |                   |         |                |       |                |
+| The app responds quickly                            |                   |          |                   |         |                |       |                |
+| The app helps me keep track of my kitchen inventory |                   |          |                   |         |                |       |                |
+| The app provides clear instructions                 |                   |          |                   |         |                |       |                |
+| The app integrates well with my daily routine       |                   |          |                   |         |                |       |                |
 
-Finally, an open interview with the user based on what was observed during the
-testing session will be conducted. The questions and answers will be documented
-for further analysis
+Finally, these open-ended questions will be asked to the user. The questions and
+answers will be documented for further analysis:
+
+1. What did you like most about using the Bite Buddy Voice Assistant?
+1. What did you find most challenging or frustrating while using the app?
+1. Do you have any suggestions for improving the Bite Buddy Voice Assistant?
 
 ## Reports
 
 For every testing session, a report will be presented with the following:
 
-1. Task completion rates
-1. Completed survey
-1. Notes from the final interview
+1. Task completion rates, and time taken to complete the task
+1. Completed survey with Likert Scale Grading
+1. Notes from the open-ended questions
