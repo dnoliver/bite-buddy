@@ -6,19 +6,19 @@ from src.database import Database
 
 class TestDatabase(unittest.TestCase):
     def setUp(self):
-        self.test_db = "test_inventory.db"
+        self.test_db = ":memory:"
         self.db = Database(self.test_db)
         self.db.execute_query("DELETE FROM inventory")  # Clear any existing data
 
     def tearDown(self):
         self.db.close_connection()
-        os.remove(self.test_db)
 
-    def test_delete_products_by_location(self):
+    def test_database(self):
         # Insert products into the database
         self.db.insert_product_in_location("pantry", "apples")
         self.db.insert_product_in_location("pantry", "oranges")
         self.db.insert_product_in_location("fridge", "milk")
+        self.db.insert_product_in_location("freezer", "frozen peas")
 
         # Verify products are inserted
         products_in_pantry = self.db.list_products_by_location("pantry")
@@ -35,6 +35,15 @@ class TestDatabase(unittest.TestCase):
         # Verify products in other locations are not affected
         products_in_fridge = self.db.list_products_by_location("fridge")
         self.assertIn("milk", products_in_fridge)
+
+        # Find products by name
+        locations = self.db.find_product("milk")
+        self.assertIn("fridge", locations)
+
+        # List all products
+        all_products = self.db.list_products()
+        self.assertIn("milk", all_products)
+        self.assertIn("frozen peas", all_products)
 
 
 if __name__ == "__main__":

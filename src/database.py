@@ -63,14 +63,7 @@ class Database:
         SELECT product FROM inventory
         WHERE location = ?;
         """
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute(select_query, (location,))
-            products = cursor.fetchall()
-            return [product[0] for product in products]
-        except Error as e:
-            logger.error(f"Error fetching products: {e}")
-            return []
+        return self.execute_query(select_query, (location,), fetch=True)
 
     def delete_products_by_location(self, location):
         delete_query = """
@@ -84,22 +77,24 @@ class Database:
         SELECT location FROM inventory
         WHERE product = ?;
         """
-        try:
-            cursor = self.connection.cursor()
-            cursor.execute(select_query, (product,))
-            locations = cursor.fetchall()
-            return [location[0] for location in locations]
-        except Error as e:
-            logger.error(f"Error fetching locations: {e}")
-            return []
+        return self.execute_query(select_query, (product,), fetch=True)
 
-    def execute_query(self, query, params=None):
+    def list_products(self):
+        select_query = """
+        SELECT DISTINCT product FROM inventory;
+        """
+        return self.execute_query(select_query, fetch=True)
+
+    def execute_query(self, query, params=None, fetch=False):
         try:
             cursor = self.connection.cursor()
             if params:
                 cursor.execute(query, params)
             else:
                 cursor.execute(query)
+            if fetch:
+                results = cursor.fetchall()
+                return [result[0] for result in results]
             self.connection.commit()
             logger.info("Query executed successfully")
         except Error as e:
