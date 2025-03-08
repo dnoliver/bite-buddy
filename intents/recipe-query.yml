@@ -1,6 +1,18 @@
 name: RecipeQueryIntent
 description: This intent is used to recommend a recipe based on a list of products.
 training-phrases:
-  - What can I make the products in my kitchen?
+  - What can I make with the products in my kitchen?
   - Show me a recipe with the products I have
   - What can I cook with the ingredients I have?
+  - Suggest a recipe using my ingredients
+  - What dishes can I prepare with my groceries?
+  - Find a recipe for the items I have
+  - What meals can I make with what I have?
+  - Give me a recipe based on my ingredients
+  - What can I prepare with the food I have?
+  - Recommend a dish with my current ingredients
+  - What can I cook with what's in my fridge?
+  - Find a meal I can make with my groceries
+  - What recipes can I make with my pantry items?
+  - Suggest a dish using the ingredients I have
+  - What can I whip up with my available ingredients?

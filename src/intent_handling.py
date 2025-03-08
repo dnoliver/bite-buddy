@@ -18,7 +18,11 @@ class InventoryQueryIntentHandling:
 
     def run(self, utterance: str):
         location_in_kitchen = self.location_in_kitchen_parser.run(utterance)
-        products = self.database.list_products_by_location(location_in_kitchen)
+
+        if location_in_kitchen == "kitchen":
+            products = self.database.list_products()
+        else:
+            products = self.database.list_products_by_location(location_in_kitchen)
 
         if len(products) == 0:
             return f"There are no products in the kitchen's {location_in_kitchen}."

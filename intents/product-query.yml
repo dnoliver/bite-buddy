@@ -1,6 +1,18 @@
 name: ProductQueryIntent
 description: This intent is used to find a product in the inventory.
 training-phrases:
-  - Where is the tomatoe sauce?
+  - Where is the tomato sauce?
   - Find the milk
   - Locate the bread
+  - Can you tell me where the eggs are?
+  - I need to find the sugar
+  - Where can I find the flour?
+  - Show me where the butter is
+  - Do you know where the salt is located?
+  - Help me find the cheese
+  - Where are the bananas?
+  - Locate the pasta for me
+  - Can you find the rice?
+  - Tell me where the yogurt is
+  - Where is the olive oil?
+  - Find the coffee for me

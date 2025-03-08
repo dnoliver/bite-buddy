@@ -3,4 +3,19 @@ description: This intent is used to remove an item from the inventory.
 training-phrases:
   - Forget what I have in my kitchen
   - Forget what I have in my pantry
-  - Remove the beans from my inventory
+  - Remove items from my inventory
+  - Delete items from my list
+  - Can you remove items from my stock?
+  - Take items off my inventory
+  - Get rid of items in my pantry
+  - Erase items from my kitchen list
+  - Please delete items from my inventory
+  - Remove items from my stock
+  - I want to delete items from my pantry
+  - Can you take items off my list?
+  - Forget about items in my inventory
+  - Remove items from my kitchen
+  - Delete items from my stock
+  - Can you erase items from my pantry?
+  - Take items off my inventory
+  - Get rid of items in my kitchen

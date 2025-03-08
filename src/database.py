@@ -85,6 +85,12 @@ class Database:
         """
         return self.execute_query(select_query, fetch=True)
 
+    def list_locations(self):
+        select_query = """
+        SELECT DISTINCT location FROM inventory;
+        """
+        return self.execute_query(select_query, fetch=True)
+
     def execute_query(self, query, params=None, fetch=False):
         try:
             cursor = self.connection.cursor()

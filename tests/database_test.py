@@ -25,6 +25,12 @@ class TestDatabase(unittest.TestCase):
         self.assertIn("apples", products_in_pantry)
         self.assertIn("oranges", products_in_pantry)
 
+        # List all locations
+        locations = self.db.list_locations()
+        self.assertIn("pantry", locations)
+        self.assertIn("fridge", locations)
+        self.assertIn("freezer", locations)
+
         # Delete products by location
         self.db.delete_products_by_location("pantry")
 

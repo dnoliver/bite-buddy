@@ -1,6 +1,17 @@
 name: InventoryQueryIntent
 description: This intent is used to query the inventory for a specific item.
 training-phrases:
-  - List everything I have in my freezer
-  - Enumerate the products in my cabinets
+  - List everything I have in my fridge
+  - Enumerate the products in my freezer
   - Show the items in my kitchen's shelf
+  - What do I have in my pantry?
+  - Can you tell me what's in my fridge?
+  - Give me a list of items in my kitchen cabinets
+  - What are the contents of my kitchen drawer?
+  - Tell me what products are in my kitchen cupboard
+  - List the food items in my refrigerator
+  - What do I have in my kitchen cupboards?
+  - Show me the inventory of my kitchen pantry
+  - What products are in my kitchen cabinet?
+  - Can you list the items in my kitchen drawer?
+  - What is in my kitchen shelf?
