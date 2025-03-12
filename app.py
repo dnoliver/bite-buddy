@@ -30,7 +30,7 @@ intent_handlers = {
 
 
 @component
-class RemoteOpenAISpeechToText:
+class RemoteOpenAITextToSpeech:
     def __init__(self):
         self.client = OpenAI()
 
@@ -38,7 +38,7 @@ class RemoteOpenAISpeechToText:
     def run(self, text: str):
         response = self.client.audio.speech.create(
             model="tts-1",
-            voice="alloy",
+            voice="onyx",
             input=text,
         )
 
@@ -49,21 +49,34 @@ class RemoteOpenAISpeechToText:
 
 
 transcriber = RemoteWhisperTranscriber()
-talker = RemoteOpenAISpeechToText()
+talker = RemoteOpenAITextToSpeech()
 
 with gr.Blocks() as demo:
     gr.Markdown("# Bite Buddy")
     gr.Markdown(
         """
-        This is a voice assistant for the products in your kitchen. 
-        You can ask a question by speaking into the microphone. 
-        You can type the question in the text box as well.
-        Then click "Run" to get the answer.
+        Hi! Welcome to Bite Buddy. I am Marcelo, your kitchen assistant.
+        I can help you with your kitchen inventory, recipes, and more.
+
+        You can ask me questions like:
+        - What is in the pantry?
+        - Put the milk in the pantry
+        - Where is the milk?
+        - Give me a meal recipe
+        - Clear the pantry
+
+        You can also ask me questions using your voice. Just use the record button and ask your question.
+        Use the "Stop" button when you are done speaking.
+        Then, click the "Run" button to get the answer.
+        If you want me to read the answer to you, click the "Speak" button.
+
+        Let's get started!
         """
     )
     audio = gr.Audio(label="Audio", sources=["microphone"], type="filepath")
-    query = gr.Dropdown(
-        label="Question",
+    query = gr.Textbox(label="Your question:", placeholder="Type your question here")
+    options = gr.Dropdown(
+        label="or select a predefined question:",
         choices=[
             "What is in the pantry?",
             "Put the milk in the pantry",
@@ -71,17 +84,23 @@ with gr.Blocks() as demo:
             "Give me a meal recipe",
             "Clear the pantry",
         ],
+        value="What is in the pantry?",
         interactive=True,
-        allow_custom_value=True,
+        allow_custom_value=False,
     )
     run = gr.Button(value="Run")
-    result = gr.Textbox(label="Answer")
+    result = gr.Markdown()
     speak = gr.Button(value="Speak")
     speech = gr.Audio(label="Speech", interactive=False)
 
-    def run_query(query):
-        if query is None:
+    def run_query(query, option):
+        if not query and not option:
             return ""
+
+        if not query and option:
+            query = option
+
+        print(f"Query: {query}")
 
         result = intent_matching.run(query)
         intent_handler = intent_handlers[result]
@@ -102,9 +121,13 @@ with gr.Blocks() as demo:
         result = talker.run(answer)
         return result["file_path"]
 
+    def reset_query(option, query):
+        return "" if option else query
+
     # pylint: disable=no-member
+    options.change(reset_query,inputs=[options, query],outputs=[query])
     audio.input(transcribe_audio, inputs=[audio], outputs=[query])
-    run.click(run_query, inputs=[query], outputs=[result])
+    run.click(run_query, inputs=[query, options], outputs=[result])
     speak.click(speak_answer, inputs=[result], outputs=[speech])
     # pylint: enable=no-member
 

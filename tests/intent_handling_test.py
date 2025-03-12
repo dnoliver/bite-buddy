@@ -41,6 +41,10 @@ class TestInventoryQueryIntentHandling(unittest.TestCase):
                 "Show the items in my kitchen's shelf",
                 "There are no products in the kitchen's shelf.",
             ),
+            (
+                "What is in the kitchen?",
+                "In the kitchen you have: tomatoes, bananas.",
+            ),
         ]
 
         for utterance, expected_intent in test_utterances:

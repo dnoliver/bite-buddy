@@ -27,9 +27,10 @@ class InventoryQueryIntentHandling:
         if len(products) == 0:
             return f"There are no products in the kitchen's {location_in_kitchen}."
 
-        return (
-            f"In the kitchen's {location_in_kitchen} you have: {', '.join(products)}."
-        )
+        if location_in_kitchen == "kitchen":
+            return f"In the kitchen you have: {', '.join(products)}."
+        else:
+            return f"In the kitchen's {location_in_kitchen} you have: {', '.join(products)}."
 
 
 class InventoryEntryIntentHandling:
@@ -105,4 +106,4 @@ class RecipeQueryIntentHandling:
         for product in product_list:
             documents.append(Document(content=product))
         result = self.pipeline.run({"prompt_builder": {"documents": documents}})
-        return "Here is a recipe for you:\n\n" + result["llm"]["replies"][0]
+        return result["llm"]["replies"][0]

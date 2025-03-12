@@ -1,5 +1,5 @@
 name: InventoryQueryIntent
-description: This intent is used to query the inventory for a specific item.
+description: This intent is used to query the inventory products in a given location.
 training-phrases:
   - List everything I have in my fridge
   - Enumerate the products in my freezer
