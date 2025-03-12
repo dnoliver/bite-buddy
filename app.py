@@ -125,7 +125,7 @@ with gr.Blocks() as demo:
         return "" if option else query
 
     # pylint: disable=no-member
-    options.change(reset_query,inputs=[options, query],outputs=[query])
+    options.change(reset_query, inputs=[options, query], outputs=[query])
     audio.input(transcribe_audio, inputs=[audio], outputs=[query])
     run.click(run_query, inputs=[query, options], outputs=[result])
     speak.click(speak_answer, inputs=[result], outputs=[speech])

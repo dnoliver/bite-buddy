@@ -32,6 +32,14 @@ The voice assistant implements the following intents to handle user requests:
 - **RecipeQueryIntent:** This intent is used to recommend a recipe based on a
   list of products.
 
+It supports 3 slots currently:
+
+- **LocationInKitchenSlot:** This slot is used to capture the location of an
+  item in the kitchen.
+- **ProductListSlot:** This slot is used to capture a list of products.
+- **ProductQuantitySlot:** This slot is used to capture the quantity of a
+  product.
+
 ## Step 3 - Fulfillment
 
 This is the fulfillment logic for the InventoryEntryIntent:
