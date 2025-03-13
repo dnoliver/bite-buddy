@@ -8,4 +8,4 @@ Documents:
 {% endfor %}
 
 User Utterance: {{query}}
-Target Intent:
+Target Intent: 
