@@ -4,37 +4,37 @@ This is a test plan for the Bite Buddy Voice Assistant application.
 
 ## Purpose
 
-The purpose is to do a Task test: can users complete a certain task?
+The purpose is to do a task test: can users complete a certain task?
 
-## Problem statement -> what's the objective
+## Problem Statement
 
 The objective of this activity is to verify if the user can use the application
 to achieve a given task. We want to know if the application will help maintain
-your kitchen inventory in a way that is more convenient than plain note taking
+your kitchen inventory in a way that is more convenient than plain note-taking
 (e.g., with pencil and paper, or in another app).
 
-## User profile -> who is the user?
+## User Profile
 
 - General computer experience: The user is a digital native, has a fair
   understanding of computing technology, uses a cellphone every day for common
   tasks, and usually has access to a computer for more dedicated tasks (e.g., 1
-  hour every other day)
-- Age: 25 to 45 years old
-- Education: High School, have attended some College
+  hour every other day).
+- Age: 25 to 45 years old.
+- Education: High School, have attended some College.
 - Major: Business and Management, Social Sciences.
 - General interests: Technology and Gadgets, Social Media, Fitness and Wellness.
 
-## Test design
+## Test Design
 
 The user will be instructed to complete the following tasks:
 
-| Task   | Description                                                            | Time to Complete | Expected Output                                                                   |
-| ------ | ---------------------------------------------------------------------- | ---------------- | --------------------------------------------------------------------------------- |
-| Task 1 | Tell Bite Buddy what you currently have in the fridge.                 | 60 seconds       | App should save user provided items to the inventory                              |
-| Task 2 | Ask Bite Buddy to list the products in the fridge.                     | 15 seconds       | App should list the product saved before in the fridge                            |
-| Task 3 | Ask Bite Buddy where the ketchup is.                                   | 15 seconds       | App should say fridge or product not found                                        |
-| Task 4 | Ask Bite Buddy to recommend a recipe with the products in your kitchen | 60 seconds       | App should return a meal recipe with the products previously listed in the fridge |
-| Task 5 | Tell Bite Buddy to forget the products in your fridge.                 | 30 seconds       | App should confirm it has forgotten the products in the fridge                    |
+| Task   | Description                                                             | Time to Complete | Expected Output                                                                   |
+| ------ | ----------------------------------------------------------------------- | ---------------- | --------------------------------------------------------------------------------- |
+| Task 1 | Tell Bite Buddy what you currently have in the fridge.                  | 60 seconds       | App should save user-provided items to the inventory                              |
+| Task 2 | Ask Bite Buddy to list the products in the fridge.                      | 15 seconds       | App should list the products saved before in the fridge                           |
+| Task 3 | Ask Bite Buddy where the ketchup is.                                    | 15 seconds       | App should say fridge or product not found                                        |
+| Task 4 | Ask Bite Buddy to recommend a recipe with the products in your kitchen. | 60 seconds       | App should return a meal recipe with the products previously listed in the fridge |
+| Task 5 | Tell Bite Buddy to forget the products in your fridge.                  | 30 seconds       | App should confirm it has forgotten the products in the fridge                    |
 
 If the user can't execute the task, the tester shall provide additional
 information about how to do it. This shall be done after 3 attempts, to prevent
@@ -77,6 +77,6 @@ answers will be documented for further analysis:
 
 For every testing session, a report will be presented with the following:
 
-1. Task completion rates, and time taken to complete the task
-1. Completed survey with Likert Scale Grading
-1. Notes from the open-ended questions
+1. Task completion rates, and time taken to complete the task.
+1. Completed survey with Likert Scale Grading.
+1. Notes from the open-ended questions.

@@ -82,15 +82,6 @@ This is the fulfillment logic for the ProductQueryIntent:
 ```txt
 <!-- ProductQueryIntentHandling -->
 
-Function run(utterance: string):
-  Parse the product from the utterance
-```
-
-This is the fullfilment logic for the ProductQueryIntent:
-
-```txt
-<!-- ProductQueryIntentHandling -->
-
 Function run(utterance: str):
     Parse the product from the utterance
     Find the locations of product
@@ -105,7 +96,7 @@ Function run(utterance: str):
         multiple locations
 ```
 
-This is the fullfilment logic for the InventoryDeleteIntent:
+This is the fulfillment logic for the InventoryDeleteIntent:
 
 ```txt
 <!-- InventoryDeleteIntentHandling -->
@@ -118,7 +109,7 @@ Function run(utterance: str):
     has been cleared
 ```
 
-This is the fullfilment logic for the RecipeQueryIntent:
+This is the fulfillment logic for the RecipeQueryIntent:
 
 ```txt
 <!-- RecipeQueryIntentHandling -->
@@ -129,7 +120,7 @@ Function run(utterance: str):
     If there are no products:
         Return a message indicating there are no products in the kitchen
 
-    Genearte a prompt for an LLM requesting it to
+    Generate a prompt for an LLM requesting it to
     generate a recipe based on the products available
 
     Make the request to the LLM
@@ -140,15 +131,185 @@ Function run(utterance: str):
 ## Step 4 - Persona
 
 Regarding the personality of the Voice Assistant, the name is Marcelo. He is an
-adult person who speaks English with a some foreign accent. He is energetic, he
-wants to get stuff done fast and efficient, considers doing chores as a waste of
-time and something that just needs to be done, but also wants to do them well.
-He likes eating healthy and diverse, but he is not a "foodie".
+adult person who speaks English with some foreign accent. He is energetic, he
+wants to get stuff done fast and efficiently, considers doing chores as a waste
+of time and something that just needs to be done, but also wants to do them
+well. He likes eating healthy and diverse, but he is not a "foodie".
 
 ## Step 5 - User Testing
 
-TODO: Complete
+See [TESTING.MD](./TESTING.md) for information about the test plan. In this
+section, we present user testing results from 2 different user sessions.
+
+For reference, these are the list of tasks that the users are asked to perform:
+
+- Task 1: Tell Bite Buddy what you currently have in the fridge.
+- Task 2: Ask Bite Buddy to list the products in the fridge.
+- Task 3: Ask Bite Buddy where the ketchup is.
+- Task 4: Ask Bite Buddy to recommend a recipe with the products in your
+  kitchen.
+- Task 5: Tell Bite Buddy to forget the products in your fridge.
+
+### User Testing 1
+
+The first user's name is Brenda. She was chosen because she was available, and
+also represents a user that is not so much technology savvy.
+
+#### User Description
+
+- General computer experience: Average, uses cellphone every day, doesn't own a
+  laptop or personal computer. Technology usage is mostly for social media
+  browsing, communication, and online shopping
+- Age: 41 years
+- Education: High School, Trade School
+- Major: Education Science
+- General interests: Social Media, Fashion, Shopping
+
+#### Usability Testing
+
+| Task   | Expected Time to Complete | Task Completed | Actual Time to Complete |
+| ------ | ------------------------- | -------------- | ----------------------- |
+| Task 1 | 60 seconds                | YES            | ~ 3 minutes             |
+| Task 2 | 15 seconds                | YES            | ~ 2 minutes             |
+| Task 3 | 15 seconds                | YES            | ~ 1 minute              |
+| Task 4 | 60 seconds                | NO             | N/A                     |
+| Task 5 | 30 seconds                | NO             | N/A                     |
+
+#### Likert Scale Testing
+
+| Statement                                           | Strongly Disagree | Disagree | Somewhat Disagree | Neutral | Somewhat Agree | Agree | Strongly Agree |
+| --------------------------------------------------- | ----------------- | -------- | ----------------- | ------- | -------------- | ----- | -------------- |
+| The app is easy to use                              |                   |          |                   | X       |                |       |                |
+| I like the flow of the application                  |                   |          |                   |         | X              |       |                |
+| The app understands what I say                      |                   |          |                   |         |                | X     |                |
+| I would recommend this application to a friend      |                   |          |                   | X       |                |       |                |
+| The app responds quickly                            |                   |          | X                 |         |                |       |                |
+| The app helps me keep track of my kitchen inventory |                   |          |                   |         | X              |       |                |
+| The app provides clear instructions                 |                   | X        |                   |         |                |       |                |
+| The app integrates well with my daily routine       |                   |          | X                 |         |                |       |                |
+| The app is visually appealing                       |                   | X        |                   |         |                |       |                |
+| I like the assistant voice                          |                   |          |                   |         |                |       | X              |
+
+#### Open Ended Questions
+
+**What did you like most about using the Bite Buddy Voice Assistant?**
+
+> I liked that it has examples on how to use it.
+
+**What did you find most challenging or frustrating while using the app?**
+
+> It is way more difficult to use than Siri.
+
+**Do you have any suggestions for improving the Bite Buddy Voice Assistant?**
+
+> It should be easier to use. The app is not very pretty to see. Using it with
+> your voice is good.
+
+### User Testing 2
+
+The second user's name is Jorge. He was chosen because he is one of the target
+users. He is both technology savvy, and likes cooking.
+
+#### User Description
+
+- General computer experience: Advanced, works with technology and computer
+  science. Uses technology all the time for personal tasks, hobbies, gaming, and
+  more.
+- Age: 44 years
+- Education: High School, College
+- Major: Computer Science, Cybersecurity
+- General interests: Technology and Gadgets, Fitness and Wellness.
+
+#### Usability Testing
+
+| Task   | Expected Time to Complete | Task Completed | Actual Time to Complete |
+| ------ | ------------------------- | -------------- | ----------------------- |
+| Task 1 | 60 seconds                | YES            | ~ 1 minute              |
+| Task 2 | 15 seconds                | YES            | ~ 1 minute              |
+| Task 3 | 15 seconds                | YES            | ~ 1 minute              |
+| Task 4 | 60 seconds                | YES            | ~ 2 minutes             |
+| Task 5 | 30 seconds                | YES            | ~ 1 minute              |
+
+#### Likert Scale Testing
+
+| Statement                                           | Strongly Disagree | Disagree | Somewhat Disagree | Neutral | Somewhat Agree | Agree | Strongly Agree |
+| --------------------------------------------------- | ----------------- | -------- | ----------------- | ------- | -------------- | ----- | -------------- |
+| The app is easy to use                              |                   |          |                   |         |                | X     |                |
+| I like the flow of the application                  |                   |          |                   |         |                | X     |                |
+| The app understands what I say                      |                   |          |                   |         |                | X     |                |
+| I would recommend this application to a friend      |                   |          |                   |         |                | X     |                |
+| The app responds quickly                            |                   |          | X                 |         |                |       |                |
+| The app helps me keep track of my kitchen inventory |                   |          |                   |         | X              |       |                |
+| The app provides clear instructions                 |                   |          |                   | X       |                |       |                |
+| The app integrates well with my daily routine       |                   |          |                   |         | X              |       |                |
+| The app is visually appealing                       |                   |          |                   | X       |                |       |                |
+| I like the assistant voice                          |                   |          | X                 |         |                |       |                |
+
+#### Open Ended Questions
+
+**What did you like most about using the Bite Buddy Voice Assistant?**
+
+> Considering it is a prototype, I think the functionality is good. I like that
+> I can see what the app does internally, and can adapt it to my needs. It
+> didn't have problems understanding my voice, something that happens usually
+> with these applications. I would make a version to handle my music inventory.
+
+**What did you find most challenging or frustrating while using the app?**
+
+> The time it takes to reply. Some requests take much longer than others to
+> reply back.
+
+**Do you have any suggestions for improving the Bite Buddy Voice Assistant?**
+
+> Improve the UI. It looks like a sample application now, beautify it a little
+> bit more!
 
 ## Step 6 - Review and Reflection
 
-TODO: Complete
+### General Impressions
+
+Something that worked very well was the development environment. I could use
+tools and libraries that I was already familiar with, and apply them to the
+creation of a voice assistant. But, because it is a custom framework, there are
+several features that are missing, most notably: reprompt, confirmations, and
+contexts. These 3 features proved to be necessary for several scenarios. In its
+current state, one can create a very simple voice assistant with it, but more
+work is needed to provide more feature coverage.
+
+### Time
+
+The prototype was completed in about 30 days. By looking at the repository
+statistics at
+[dnoliver/bite-buddy Insights](https://github.com/dnoliver/bite-buddy/graphs/code-frequency),
+most of the work was completed in the first week of March 2025. The step that
+took the longest to complete was end-to-end testing. Unit testing was pretty
+straightforward to set up and run, but once I started testing the components
+interactions (Voice Input + UI + Intent Handling + Voice Output) I started to
+detect bugs and have regressions after fixing them. I should have invested a
+little bit more time in the end-to-end testing setup. User testing was
+expensive, time-wise, but was very useful. I would have liked to have time to
+improve the experience after I got the user testing results.
+
+### Testing
+
+Considering User Testing only (not automatic one, that was already described in
+the previous section as a time-saving activity, at least for the unit test
+case), I think the most useful one was the Usability Testing. Watching someone
+try to execute a task in software you created is both painful and insightful.
+You note how important is the in-app help, having an intuitive UI, and thinking
+how a person without any context on the application will react to it when using
+it for the first time. If I had more time, I would rely more on automated
+end-to-end testing (as described in the previous section as well), but will
+prioritize periodical usability testing activities.
+
+### Future Work
+
+The UI needs a lot of work, especially if we want to add multimodality.
+End-to-End testing, like using Selenium + Gradio to exercise end-to-end
+workflows, is something I should consider as well. Using local models instead of
+cloud ones is also something important, Haystack provides some help here, with
+the HuggingFaceLocalGenerator (but I couldn't find any options for
+Speech-to-Text and Text-to-Speech, will have to create custom components for
+them). I would also like to complete the reprompt, confirmations, and contexts
+features, plus multimodality (I think that would cover many other use cases for
+different voice assistants).
